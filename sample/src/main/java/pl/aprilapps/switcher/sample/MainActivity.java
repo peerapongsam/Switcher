@@ -41,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
                 .addContentView(findViewById(R.id.recyclerView)) //content member
                 .addContentView(findViewById(R.id.fab)) //content member
                 .addErrorView(findViewById(R.id.errorView)) //error view member
+                .addEmptyView(findViewById(R.id.emptyView)) //empty placeholder member
                 .addProgressView(findViewById(R.id.progressView)) //progress view member
                 .setErrorLabel((TextView) findViewById(R.id.errorLabel)) // TextView within your error member group that you want to change
                 .setProgressLabel((TextView) findViewById(R.id.progressLabel)) // TextView within your progress member group that you want to change
-                .addEmptyView(findViewById(R.id.emptyView)) //empty placeholder member
+                .setEmptyLabel((TextView) findViewById(R.id.emptyLabel))
                 .setAnimDuration(400)
                 .setLogsEnabled(true)
                 .build();
@@ -113,6 +114,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onEmpty() {
-        switcher.showEmptyView();
+        switcher.showEmptyView("Do not have any data");
     }
 }

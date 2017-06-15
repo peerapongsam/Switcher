@@ -20,6 +20,7 @@ open class Switcher(context: Context) {
     private val emptyViews = mutableSetOf<View>()
     private var progressLabel: TextView? = null
     private var errorLabel: TextView? = null
+    private var emptyLabel: TextView? = null
     private var invisibleState = View.INVISIBLE
     private var logsEnabled = false
 
@@ -208,9 +209,11 @@ open class Switcher(context: Context) {
         showErrorView(0, errorMessage)
     }
 
-    //    ===================   ERROR   ===================
+    //    ===================   EMPTY   ===================
 
-    private fun showEmptyView(duration: Long) {
+    private fun showEmptyView(duration: Long, emptyMessage: String?) {
+        emptyMessage?.let { emptyLabel?.let { emptyLabel!!.text = emptyMessage } }
+
         if (areAllEmptyViewsVisible()) {
             printWarningLog("All empty views are currently visible. Aborting.")
             return
@@ -224,12 +227,20 @@ open class Switcher(context: Context) {
 
     fun showEmptyView() {
         printLog("Showing empty view")
-        showEmptyView(animationDuration)
+        showEmptyView(animationDuration, null)
     }
 
     fun showEmptyViewImmediately() {
         printLog("Showing empty view immediately")
-        showEmptyView(0)
+        showEmptyView(0, null)
+    }
+
+    fun showEmptyView(emptyMessage: String?) {
+        showEmptyView(animationDuration, emptyMessage)
+    }
+
+    fun showEmptyViewImmediately(emptyMessage: String?) {
+        showEmptyView(0, emptyMessage)
     }
 
     private fun allNonContentViews(): MutableSet<View> {
@@ -285,37 +296,36 @@ open class Switcher(context: Context) {
         }
 
         fun setErrorLabel(errorLabel: TextView): Builder {
-            if (errorLabel == null) throw NullPointerException("Non-null param cannot be null")
             switcher.errorLabel = errorLabel
             return this
         }
 
         fun setProgressLabel(progressLabel: TextView): Builder {
-            if (progressLabel == null) throw NullPointerException("Non-null param cannot be null")
             switcher.progressLabel = progressLabel
             return this
         }
 
+        fun setEmptyLabel(emptyLabel: TextView): Builder {
+            switcher.emptyLabel = emptyLabel
+            return this
+        }
+
         fun addContentView(view: View): Builder {
-            if (view == null) throw NullPointerException("Non-null param cannot be null")
             switcher.contentViews.add(view)
             return this
         }
 
         fun addProgressView(view: View): Builder {
-            if (view == null) throw NullPointerException("Non-null param cannot be null")
             switcher.progressViews.add(view)
             return this
         }
 
         fun addErrorView(view: View): Builder {
-            if (view == null) throw NullPointerException("Non-null param cannot be null")
             switcher.errorViews.add(view)
             return this
         }
 
         fun addEmptyView(view: View): Builder {
-            if (view == null) throw NullPointerException("Non-null param cannot be null")
             switcher.emptyViews.add(view)
             return this
         }
