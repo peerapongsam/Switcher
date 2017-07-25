@@ -291,8 +291,9 @@ open class Switcher(context: Context) {
             return this
         }
 
-        fun setInvisibleStateToGone() {
+        fun setInvisibleStateToGone(): Builder {
             switcher.invisibleState = View.GONE
+            return this
         }
 
         fun setErrorLabel(errorLabel: TextView): Builder {
